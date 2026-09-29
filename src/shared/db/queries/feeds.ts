@@ -70,6 +70,7 @@ export async function createFeedFollow(userId: string, feedId: string) {
 export async function getFeedsFollowedByUser(userId: string){
     const feedsFollowed = await db.select({
         id: feedFollows.id,
+        feedUrl: feeds.url,
         feedName: feeds.name,
         followerName: users.name,
     })
@@ -91,3 +92,9 @@ export async function removeFeedFollow(userId: string, feedId: string) {
 
     return deleted;
 }
+
+
+// https://hnrss.org/newest
+// https://www.wagslane.dev/index.xml
+// https://techcrunch.com/feed/
+// https://news.ycombinator.com/rss
