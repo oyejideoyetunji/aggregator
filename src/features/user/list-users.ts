@@ -6,6 +6,7 @@ export async function listUsers(_: string) {
 
     const config = readConfig();
 
+    console.log(">====== Getting All Users ======<")
     for (const user of users) {
         if (user.name === config?.currentUserName) {
             console.log(`* ${user.name} (current)`);
@@ -13,4 +14,5 @@ export async function listUsers(_: string) {
         }
         console.log(`* ${user.name}`);
     }
+    console.log(">====== End ======<")
 }

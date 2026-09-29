@@ -1,5 +1,4 @@
-import { readConfig } from "../../shared/config";
-import { createFeed, createFeedFollow, getUser, type User } from "../../shared/db";
+import { createFeed, createFeedFollow, type User } from "../../shared/db";
 
 export async function addFeed(user: User, cmdName: string, ...args: string[]) {
     const [name, url] = args;

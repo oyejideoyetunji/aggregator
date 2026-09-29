@@ -1,8 +1,8 @@
 import { fetchFeed } from "../../shared/api";
-import { getNextFeedToFetch, markFeedFetched } from "../../shared/db";
+import { createPosts, getNextFeedToFetch, markFeedFetched } from "../../shared/db";
 import { parseDuration } from "../../shared/helpers/parse-duration";
 
-export async function getAggregate(cmdName: string, ...args: string[]) {
+export async function aggregate(cmdName: string, ...args: string[]) {
     const interval = args?.[0];
     if (!interval) {
         throw new Error(`interval is required. usage: ${cmdName} <interval>`);
@@ -36,10 +36,14 @@ async function scrapeFeeds() {
     const aggregate = await fetchFeed(feed.url);
     await markFeedFetched(feed.id);
 
-    const feedItems = aggregate.item;
-    console.log(">========== Displaying The Titles Of Feed Items ===========<")
-    for (const item of feedItems) {
-        console.log(`** ${item.title}`);
-    }
-    console.log(">========== End ===========<")
+    const posts = aggregate.item.map((item) => ({
+        url: item.link,
+        title: item.title,
+        feedId: feed.id,
+        description: item.description,
+        publishedAt: new Date(item.pubDate),
+    }));
+    console.log(`>========== Creating Posts Records For Feed at ${feed.url} ===========<`)
+    await createPosts(posts);
+    console.log(">========== Completed ===========<")
 }
