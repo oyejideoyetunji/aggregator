@@ -1,4 +1,4 @@
-import { listUsers, login, register, reset, getAggregate, addFeed, listFeeds, followFeed, listFollows, unfollowFeed } from "./features";
+import { listUsers, login, register, reset, aggregate, addFeed, listFeeds, followFeed, listFollows, unfollowFeed, browsePosts } from "./features";
 import { readConfig } from "./shared/config";
 import { getUser } from "./shared/db";
 import type { UserRequiredHandler } from "./shared/types";
@@ -22,12 +22,13 @@ async function main() {
         registerCommand(commandRegistry, 'register', register);
         registerCommand(commandRegistry, 'reset', reset);
         registerCommand(commandRegistry, 'users', listUsers);
-        registerCommand(commandRegistry, 'agg', getAggregate);
+        registerCommand(commandRegistry, 'agg', aggregate);
         registerCommand(commandRegistry, 'addfeed', loggedInMiddleware(addFeed));
         registerCommand(commandRegistry, 'feeds', listFeeds);
         registerCommand(commandRegistry, 'follow', loggedInMiddleware(followFeed));
         registerCommand(commandRegistry, 'following', loggedInMiddleware(listFollows));
-        registerCommand(commandRegistry, 'unfollow', loggedInMiddleware(unfollowFeed))
+        registerCommand(commandRegistry, 'unfollow', loggedInMiddleware(unfollowFeed));
+        registerCommand(commandRegistry, 'browse', loggedInMiddleware(browsePosts));
         await runCommand(commandRegistry, cmdName, ...args);
     } catch (e: any) {
         console.log(e?.message);
