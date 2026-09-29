@@ -29,6 +29,13 @@
       "when": 1790402531311,
       "tag": "0003_sleepy_silver_sable",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1790664298156,
+      "tag": "0004_sturdy_next_avengers",
+      "breakpoints": true
     }
   ]
 }
